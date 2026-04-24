@@ -1,0 +1,23 @@
+name: Get My Books
+on: workflow_dispatch
+
+jobs:
+  download:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Download Files
+        run: |
+          mkdir -p raw_books
+          curl -L "https://raw.githubusercontent.com/shamela-isa/Al_Burhan_fi_Ulum_al_Quran/master/book.txt" -o "raw_books/البرهان_للزركشي.txt"
+          curl -L "https://raw.githubusercontent.com/shamela-isa/Al_Itqan_fi_Ulum_al_Quran/master/book.txt" -o "raw_books/الإتقان_للسيوطي.txt"
+          curl -L "https://raw.githubusercontent.com/shamela-isa/Al_Muqni_fi_Ma_rifat_Marsum_Masahif_Ahl_al_Amsar/master/book.txt" -o "raw_books/المقنع_للداني.txt"
+          curl -L "https://raw.githubusercontent.com/shamela-isa/Samir_al_Talibin_fi_Rasm_wa_Dabt_al_Kitab_al_Mubin/master/book.txt" -o "raw_books/سمير_الطالبين.txt"
+          curl -L "https://raw.githubusercontent.com/shamela-isa/Tarikh_al_Mushaf_al_Sharif/master/book.txt" -o "raw_books/تاريخ_المصحف.txt"
+      - name: Push to Repo
+        run: |
+          git config --global user.name "GitHub Action"
+          git config --global user.email "action@github.com"
+          git add raw_books/
+          git commit -m "تم إضافة كتب علوم القرآن"
+          git push
